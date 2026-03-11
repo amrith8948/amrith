@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Amrith Raj M V — Data Analyst & AI Builder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ob: #080a0e;
+      --ob2: #0d1117;
+      --ob3: #131820;
+      --ob4: #1a2130;
+      --gold: #b8922a;
+      --goldb: #d4a843;
+      --goldp: #e8c97a;
+      --goldd: rgba(184,146,42,0.13);
+      --w: #f0ece4;
+      --wd: rgba(240,236,228,0.55);
+      --wf: rgba(240,236,228,0.15);
+      --gr: #4ade80;
+      --grd: rgba(74,222,128,0.1);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Outfit',sans-serif; background:var(--ob); color:var(--w); overflow-x:hidden; cursor:none; }
+
+    /* CURSOR */
+    #cur { position:fixed;width:9px;height:9px;background:var(--goldb);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .2s,height .2s; }
+    #cur-r { position:fixed;width:34px;height:34px;border:1px solid rgba(212,168,67,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%); }
+
+    /* NOISE */
+    body::after { content:'';position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+    /* NAV */
+    nav { position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 4rem;background:rgba(8,10,14,.78);backdrop-filter:blur(24px);border-bottom:1px solid rgba(184,146,42,.09);transition:padding .4s,background .4s; }
+    nav.sc { padding:.9rem 4rem;background:rgba(8,10,14,.94); }
+    .nl { font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:var(--w);letter-spacing:.12em; }
+    .nl span { color:var(--goldb); }
+    .nv { display:flex;gap:2.4rem;list-style:none; }
+    .nv a { color:var(--wd);text-decoration:none;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:300;position:relative;padding-bottom:2px;transition:color .3s; }
+    .nv a::after { content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--goldb);transition:width .35s ease; }
+    .nv a:hover,.nv a.act { color:var(--w); }
+    .nv a:hover::after,.nv a.act::after { width:100%; }
+    .nv a.act { color:var(--goldp); }
+
+    /* CANVAS */
+    #pc { position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4; }
+
+    /* HERO */
+    #hero { min-height:100vh;position:relative;z-index:2;display:flex;align-items:center;padding:0 4rem;overflow:hidden; }
+    .h-amb { position:absolute;inset:0;background:radial-gradient(ellipse 55% 60% at 76% 42%,rgba(184,146,42,.05) 0%,transparent 65%),radial-gradient(ellipse 40% 50% at 18% 70%,rgba(8,10,14,.9) 0%,transparent 55%); }
+    .h-vl { position:absolute;left:2rem;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent 0%,rgba(184,146,42,.28) 30%,rgba(184,146,42,.28) 70%,transparent 100%);opacity:0;animation:fi 1.5s 1.8s forwards; }
+    .hc { position:relative;z-index:3;max-width:800px; }
+    .h-ey { display:flex;align-items:center;gap:1rem;margin-bottom:2.2rem;opacity:0;animation:sr .9s .4s cubic-bezier(.16,1,.3,1) forwards; }
+    .h-el { width:38px;height:1px;background:var(--goldb); }
+    .h-et { font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--goldb);font-weight:400; }
+    .h-name { font-family:'Cormorant Garamond',serif;font-size:clamp(3.6rem,7.5vw,7rem);font-weight:300;line-height:.94;color:var(--w);margin-bottom:.12em;opacity:0;animation:sr .9s .65s cubic-bezier(.16,1,.3,1) forwards; }
+    .h-name em { font-style:italic;color:var(--goldp);display:block; }
+    .h-div { width:0;height:1px;background:linear-gradient(90deg,var(--goldb),transparent);margin:1.8rem 0;animation:ew 1s 1.3s ease forwards; }
+    .h-sub { font-size:1rem;color:var(--wd);line-height:1.85;max-width:530px;font-weight:300;opacity:0;animation:sr .9s 1s cubic-bezier(.16,1,.3,1) forwards; }
+    .h-cta { display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:2.8rem;opacity:0;animation:sr .9s 1.2s cubic-bezier(.16,1,.3,1) forwards; }
+    .bg { position:relative;overflow:hidden;background:transparent;border:1px solid var(--goldb);color:var(--goldp);padding:.9rem 2.4rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:400;text-decoration:none;cursor:none;transition:color .35s;display:inline-block; }
+    .bg::before { content:'';position:absolute;inset:0;background:var(--goldb);transform:translateX(-101%);transition:transform .4s cubic-bezier(.16,1,.3,1); }
+    .bg:hover { color:var(--ob); }
+    .bg:hover::before { transform:translateX(0); }
+    .bg span { position:relative;z-index:1; }
+    .bgh { background:transparent;border:1px solid var(--wf);color:var(--wd);padding:.9rem 2.4rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:400;text-decoration:none;cursor:none;transition:border-color .3s,color .3s;display:inline-block; }
+    .bgh:hover { border-color:rgba(240,236,228,.25);color:var(--w); }
+    .h-st { position:absolute;right:4rem;bottom:5rem;z-index:3;display:flex;gap:3.5rem;opacity:0;animation:fi 1s 1.6s forwards; }
+    .st { text-align:right; }
+    .sn { font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--w);line-height:1;display:block; }
+    .sn sup { font-size:1rem;color:var(--goldb);vertical-align:super;margin-left:1px; }
+    .sl { font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--wd);display:block;margin-top:.3rem; }
+    .sh { position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fi 1s 2s forwards;z-index:3; }
+    .sh span { font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--wd); }
+    .sh-l { width:1px;height:40px;background:linear-gradient(180deg,var(--goldb),transparent);animation:sp 2s ease-in-out infinite; }
+
+    /* SECTION COMMONS */
+    section { position:relative;z-index:2;padding:7rem 4rem; }
+    .sl2 { font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--goldb);margin-bottom:.8rem;display:flex;align-items:center;gap:.8rem; }
+    .sl2::before { content:'';width:22px;height:1px;background:var(--goldb); }
+    .st2 { font-family:'Cormorant Garamond',serif;font-size:clamp(2.1rem,3.8vw,3.3rem);font-weight:300;color:var(--w);line-height:1.15;margin-bottom:4rem; }
+    .st2 em { font-style:italic;color:var(--goldp); }
+
+    /* ABOUT */
+    #about { background:var(--ob2);border-top:1px solid rgba(184,146,42,.07); }
+    .aw { display:grid;grid-template-columns:1fr 1fr;gap:6rem;max-width:1200px;align-items:start; }
+    .ab p { font-size:.98rem;color:var(--wd);line-height:1.9;font-weight:300;margin-bottom:1.3rem; }
+    .ab p strong { color:var(--w);font-weight:400; }
+    .am { margin-top:2.5rem; }
+    .mr { display:grid;grid-template-columns:90px 1fr;padding:.72rem 0;border-bottom:1px solid rgba(240,236,228,.06);align-items:baseline; }
+    .mk { font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--goldb); }
+    .mv { font-size:.88rem;color:var(--wd);font-weight:300; }
+    .ar { display:flex;flex-direction:column;gap:1.2rem; }
+    .nl2 { font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--goldb);margin-bottom:.3rem; }
+    .nc { border:1px solid rgba(74,222,128,.18);background:var(--grd);padding:1.3rem 1.5rem;position:relative;overflow:hidden; }
+    .nc::before { content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gr); }
+    .nc-t { font-size:.93rem;color:var(--w);font-weight:400;margin-bottom:.3rem; }
+    .nc-s { font-size:.78rem;color:rgba(74,222,128,.7);line-height:1.5; }
+    .ld { display:inline-block;width:6px;height:6px;background:var(--gr);border-radius:50%;margin-right:.4rem;vertical-align:middle;animation:pulse 2s ease-in-out infinite; }
+    .cl { margin-top:.5rem;display:flex;flex-direction:column;gap:.7rem; }
+    .ci { display:flex;align-items:baseline;gap:1rem;padding:.85rem 1.1rem;border:1px solid rgba(184,146,42,.13);background:rgba(184,146,42,.025); }
+    .cn { font-size:.86rem;color:var(--w);flex:1;font-weight:300; }
+    .cis { font-size:.68rem;color:var(--goldb);letter-spacing:.1em;text-transform:uppercase; }
+
+    /* EXPERIENCE */
+    #experience { background:var(--ob);border-top:1px solid rgba(184,146,42,.07); }
+    .ew { max-width:860px; }
+    .tl { position:relative; }
+    .tl::before { content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(180deg,var(--goldb) 0%,rgba(184,146,42,.12) 100%); }
+    .te { padding-left:2.8rem;padding-bottom:3.5rem;position:relative; }
+    .te:last-child { padding-bottom:0; }
+    .td { position:absolute;left:-4px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--goldb);box-shadow:0 0 10px rgba(212,168,67,.55); }
+    .td.g { background:var(--gr);box-shadow:0 0 10px rgba(74,222,128,.45); }
+    .tw { font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--goldb);margin-bottom:.5rem; }
+    .tw.nw { color:var(--gr); }
+    .tr { font-family:'Cormorant Garamond',serif;font-size:1.33rem;font-weight:400;color:var(--w);margin-bottom:.2rem; }
+    .tc { font-size:.8rem;color:var(--wd);margin-bottom:1rem;font-weight:300; }
+    .tb { display:inline-block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;background:var(--grd);color:var(--gr);border:1px solid rgba(74,222,128,.28);padding:.1rem .5rem;margin-left:.5rem;vertical-align:middle; }
+    .tp { list-style:none;display:flex;flex-direction:column;gap:.52rem; }
+    .tp li { font-size:.86rem;color:var(--wd);padding-left:1.2rem;position:relative;line-height:1.65;font-weight:300; }
+    .tp li::before { content:'';position:absolute;left:0;top:.65em;width:5px;height:1px;background:var(--goldb); }
+
+    /* SKILLS */
+    #skills { background:var(--ob2);border-top:1px solid rgba(184,146,42,.07); }
+    .sg { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:1100px;background:rgba(184,146,42,.07); }
+    .sc2 { background:var(--ob2);padding:1.9rem 1.7rem;transition:background .3s; }
+    .sc2:hover { background:var(--ob3); }
+    .sct { font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--goldb);margin-bottom:1.1rem; }
+    .sch { display:flex;flex-wrap:wrap;gap:.42rem; }
+    .chip { font-size:.76rem;color:var(--wd);font-weight:300;border:1px solid rgba(240,236,228,.09);padding:.26rem .72rem;transition:border-color .2s,color .2s;cursor:default; }
+    .chip:hover { border-color:rgba(184,146,42,.38);color:var(--w); }
+
+    /* PROJECTS */
+    #projects { background:var(--ob);border-top:1px solid rgba(184,146,42,.07); }
+    .pw { display:flex;flex-direction:column;gap:3px;max-width:1200px; }
+    .pc2 { position:relative;overflow:hidden;border:1px solid rgba(184,146,42,.11);background:var(--ob2);padding:3rem;transition:border-color .4s; }
+    .pc2:hover { border-color:rgba(184,146,42,.32); }
+    .pc2::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--goldb),rgba(184,146,42,.08),transparent);transform:scaleX(0);transform-origin:left;transition:transform .7s cubic-bezier(.16,1,.3,1); }
+    .pc2:hover::before { transform:scaleX(1); }
+    .pbn { position:absolute;right:2.5rem;top:1.5rem;font-family:'Cormorant Garamond',serif;font-size:7rem;font-weight:300;color:rgba(184,146,42,.04);line-height:1;pointer-events:none;user-select:none;transition:color .4s; }
+    .pc2:hover .pbn { color:rgba(184,146,42,.07); }
+    .pi { display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2.5rem; }
+    .pm { flex:1;min-width:280px; }
+    .pmt { font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--goldb);margin-bottom:.6rem; }
+    .pt { font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:300;color:var(--w);margin-bottom:.4rem;line-height:1.2; }
+    .ps { font-size:.78rem;color:var(--wd);margin-bottom:1.6rem;font-weight:300; }
+    .pd { font-size:.9rem;color:var(--wd);line-height:1.85;font-weight:300;margin-bottom:1rem; }
+    .pd strong { color:var(--w);font-weight:400; }
+    .ptl { font-size:.76rem;color:rgba(240,236,228,.28);line-height:1.7;font-weight:300;border-top:1px solid rgba(184,146,42,.09);padding-top:.65rem;margin-top:.4rem; }
+    .ptl span { color:var(--goldb); }
+    .pch { display:flex;flex-wrap:wrap;gap:.38rem;margin-top:1.6rem; }
+    .pch span { font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--goldp);border:1px solid rgba(184,146,42,.22);padding:.22rem .62rem; }
+    .pside { min-width:195px;max-width:225px;display:flex;flex-direction:column;gap:1px; }
+    .pb { background:rgba(184,146,42,.035);border:1px solid rgba(184,146,42,.1);padding:1.15rem;position:relative;overflow:hidden; }
+    .pb::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,146,42,.04) 0%,transparent 55%); }
+    .pbl { font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--goldb);margin-bottom:.65rem;position:relative; }
+    .pbc { font-size:.8rem;color:var(--wd);line-height:1.65;font-weight:300;position:relative; }
+    .pbc strong { color:var(--w);font-weight:400; }
+    .pbn2 { font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:300;color:var(--goldp);display:block;margin-top:.15rem;position:relative; }
+    .pbs { font-size:.7rem;color:rgba(240,236,228,.28);position:relative; }
+
+    /* CONTACT */
+    #contact { background:var(--ob2);border-top:1px solid rgba(184,146,42,.07);text-align:center; }
+    .cw { max-width:660px;margin:0 auto; }
+    .ci2 { font-size:.98rem;color:var(--wd);line-height:1.85;font-weight:300;margin-bottom:3rem; }
+    .ce { font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.5vw,1.85rem);font-weight:300;color:var(--w);text-decoration:none;display:inline-block;padding-bottom:4px;border-bottom:1px solid rgba(184,146,42,.38);transition:color .3s,border-color .3s; }
+    .ce:hover { color:var(--goldp);border-color:var(--goldp); }
+    .cls { display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-top:3.5rem; }
+    .cl2 { display:flex;align-items:center;gap:.55rem;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--wd);text-decoration:none;transition:color .25s; }
+    .cl2:hover { color:var(--goldp); }
+    .cl2 svg { width:13px;height:13px;opacity:.55; }
+
+    /* FOOTER */
+    footer { background:var(--ob);text-align:center;padding:1.8rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(184,146,42,.07);z-index:2;position:relative; }
+    footer span { font-size:.68rem;letter-spacing:.12em;color:rgba(240,236,228,.2); }
+
+    /* KEYFRAMES */
+    @keyframes fi { from{opacity:0}to{opacity:1} }
+    @keyframes sr { from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:translateX(0)} }
+    @keyframes ew { from{width:0}to{width:210px} }
+    @keyframes sp { 0%,100%{opacity:.3}50%{opacity:1} }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.4)}50%{box-shadow:0 0 0 5px rgba(74,222,128,0)} }
+
+    .rv { opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1); }
+    .rv.v { opacity:1;transform:none; }
+    .rl { opacity:0;transform:translateX(-26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1); }
+    .rl.v { opacity:1;transform:none; }
+
+    @media(max-width:900px){
+      nav,nav.sc{padding:1rem 1.5rem;}
+      section{padding:5rem 1.5rem;}
+      #hero{padding:0 1.5rem;}
+      .aw{grid-template-columns:1fr;gap:2.8rem;}
+      .h-st{position:static;margin-top:3rem;flex-wrap:wrap;gap:2rem;}
+      .h-st .st{text-align:left;}
+      .sg{grid-template-columns:1fr 1fr;}
+      .pside{max-width:100%;}
+      footer{flex-direction:column;gap:.4rem;}
+      .nv{display:none;}
+    }
+    @media(max-width:600px){.sg{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<canvas id="pc"></canvas>
+
+<nav id="nb">
+  <div class="nl">Amrith <span>Raj</span></div>
+  <ul class="nv">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="h-amb"></div>
+  <div class="h-vl"></div>
+  <div class="hc">
+    <div class="h-ey">
+      <div class="h-el"></div>
+      <span class="h-et">Data Analyst &amp; AI Builder · Bluetik</span>
+    </div>
+    <h1 class="h-name">Amrith<br/><em>Raj M V</em></h1>
+    <div class="h-div"></div>
+    <p class="h-sub">Data Analyst at Bluetik — building AI tools that actually ship. From WhatsApp-native booking systems for 15-branch chains to Instagram strategy engines that replace hours of agency work in 2 minutes. I analyse data, architect systems, and write the code.</p>
+    <div class="h-cta">
+      <a href="#projects" class="bg"><span>View Projects</span></a>
+      <a href="#contact" class="bgh">Get in Touch</a>
+    </div>
+  </div>
+  <div class="h-st">
+    <div class="st"><span class="sn">3<sup>+</sup></span><span class="sl">Certifications</span></div>
+    <div class="st"><span class="sn">2</span><span class="sl">AI Systems Built</span></div>
+    <div class="st"><span class="sn">3<sup>+</sup></span><span class="sl">Roles</span></div>
+  </div>
+  <div class="sh"><span>Scroll</span><div class="sh-l"></div></div>
+</section>
+
+<section id="about">
+  <div class="sl2">Who I Am</div>
+  <h2 class="st2">About <em>Me</em></h2>
+  <div class="aw">
+    <div class="ab rl">
+      <p>I'm Amrith Raj — a Data Analyst and AI builder currently working at <strong>Bluetik Marketing Agency</strong>, where I don't just analyse data — I build the tools that generate it. My role sits at the intersection of data, AI engineering, and real product delivery.</p>
+      <p>At Bluetik, I've built two production-grade AI systems entirely from scratch: an <strong>AI Strategy Engine</strong> that automates social media strategy generation for agency clients in under 2 minutes, and an <strong>AI Saloon Management System</strong> — a WhatsApp-native, bilingual (Malayalam &amp; English) booking platform for a 15-branch Kerala chain. Both are locally prototyped and production-architected.</p>
+      <p>I work across the full stack of a data project — from writing SQL queries and cleaning datasets to architecting Node.js backends, integrating Claude AI APIs, and building React dashboards. I hold a B.Tech in Electrical &amp; Electronics Engineering, am a NASSCOM-certified AI Engineer (Gold), and have trained formally as a Data Scientist and AI Expert.</p>
+      <div class="am">
+        <div class="mr"><span class="mk">Currently</span><span class="mv">Data Analyst — Bluetik Marketing Agency</span></div>
+        <div class="mr"><span class="mk">Builds</span><span class="mv">AI tools, dashboards, WhatsApp automation, data pipelines</span></div>
+        <div class="mr"><span class="mk">Location</span><span class="mv">Kannur, Kerala, India</span></div>
+        <div class="mr"><span class="mk">Email</span><span class="mv">amrithnambiar901@gmail.com</span></div>
+        <div class="mr"><span class="mk">Phone</span><span class="mv">+91 9562073633</span></div>
+        <div class="mr"><span class="mk">Education</span><span class="mv">B.Tech EEE — Vimal Jyothi Engineering College</span></div>
+      </div>
+    </div>
+    <div class="ar rv">
+      <div class="nl2">What I'm working on now</div>
+      <div class="nc">
+        <div class="nc-t"><span class="ld"></span>AI Strategy Engine</div>
+        <div class="nc-s">React + Claude AI + Apify · Instagram competitor scraping → full campaign strategy in &lt;2 min · Live at Bluetik</div>
+      </div>
+      <div class="nc">
+        <div class="nc-t"><span class="ld"></span>AI Saloon Management System</div>
+        <div class="nc-s">Node.js + WhatsApp + Claude AI · 15-branch Kerala chain · Malayalam &amp; English · Prototype ready</div>
+      </div>
+      <div class="nl2" style="margin-top:.8rem;">Certifications</div>
+      <div class="cl">
+        <div class="ci"><span class="cn">AI Engineer (AIE) — Gold Category</span><span class="cis">NASSCOM</span></div>
+        <div class="ci"><span class="cn">Artificial Intelligence Expert</span><span class="cis">IABAC</span></div>
+        <div class="ci"><span class="cn">Certified Data Scientist</span><span class="cis">IABAC</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="sl2">Career Journey</div>
+  <h2 class="st2"><em>Experience</em></h2>
+  <div class="ew">
+    <div class="tl">
+      <div class="te rv">
+        <div class="td g"></div>
+        <div class="tw nw">Present</div>
+        <div class="tr">Data Analyst</div>
+        <div class="tc">Bluetik <span class="tb">Current</span></div>
+        <ul class="tp">
+          <li>Building AI-powered tools from scratch — including an Instagram strategy engine and a WhatsApp-native saloon management system used by agency clients and pitched to enterprise customers.</li>
+          <li>Working across the full data-to-product pipeline: data analysis, API integration, prompt engineering, React dashboards, and system architecture.</li>
+        </ul>
+      </div>
+      <div class="te rv">
+        <div class="td"></div>
+        <div class="tw">Oct 2024 – Dec 2025</div>
+        <div class="tr">Data &amp; MIS Analyst — Production &amp; Marketing</div>
+        <div class="tc">SRA Foods, Kannur</div>
+        <ul class="tp">
+          <li>Analyzed production, sales, and operational data to identify process gaps and support management decision-making.</li>
+          <li>Developed and tracked KPIs and performance metrics for output, quality, and sales using Excel and Power BI.</li>
+          <li>Coordinated with cross-functional stakeholders across production, logistics, and marketing to gather reporting requirements.</li>
+          <li>Prepared and presented analytical summaries and dashboards to leadership for planning and strategy alignment.</li>
+        </ul>
+      </div>
+      <div class="te rv">
+        <div class="td"></div>
+        <div class="tw">Oct 2024 – Jun 2025</div>
+        <div class="tr">Data Analyst Intern</div>
+        <div class="tc">Rubixie AI, Bangalore</div>
+        <ul class="tp">
+          <li>Cleaned, preprocessed, and validated large structured datasets using Python (Pandas, NumPy), reducing data inconsistencies by 30%.</li>
+          <li>Performed exploratory data analysis (EDA) to identify trends, patterns, and anomalies supporting business insights.</li>
+          <li>Wrote SQL queries — joins, filters, aggregations — to extract and analyze data from relational datasets.</li>
+          <li>Designed interactive Power BI dashboards to visualize KPIs and performance metrics for stakeholders.</li>
+          <li>Automated data preparation tasks, improving reporting efficiency and turnaround time.</li>
+        </ul>
+      </div>
+      <div class="te rv">
+        <div class="td"></div>
+        <div class="tw">Jun 2021 – Aug 2021</div>
+        <div class="tr">Student Partner</div>
+        <div class="tc">Inventrom Private Ltd (Bolt IoT), Bangalore</div>
+        <ul class="tp">
+          <li>Promoted IoT and ML concepts while contributing to brand awareness and business development.</li>
+          <li>Utilized communication and marketing skills to engage diverse audiences.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sl2">Capabilities</div>
+  <h2 class="st2">Skills <em>&amp; Tools</em></h2>
+  <div class="sg rv">
+    <div class="sc2"><div class="sct">Programming &amp; Tools</div><div class="sch"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Scikit-learn</span><span class="chip">Excel</span><span class="chip">Power BI</span></div></div>
+    <div class="sc2"><div class="sct">Data Analysis</div><div class="sch"><span class="chip">EDA</span><span class="chip">Data Cleaning</span><span class="chip">Data Validation</span><span class="chip">Feature Engineering</span><span class="chip">Descriptive Statistics</span><span class="chip">Trend Analysis</span></div></div>
+    <div class="sc2"><div class="sct">Machine Learning</div><div class="sch"><span class="chip">Regression</span><span class="chip">Classification</span><span class="chip">CNN</span><span class="chip">NLP</span><span class="chip">TensorFlow</span><span class="chip">NLTK</span></div></div>
+    <div class="sc2"><div class="sct">Visualization &amp; Reporting</div><div class="sch"><span class="chip">Power BI Dashboards</span><span class="chip">Matplotlib</span><span class="chip">Seaborn</span><span class="chip">KPI Tracking</span><span class="chip">MIS Reporting</span></div></div>
+    <div class="sc2"><div class="sct">Business Analysis</div><div class="sch"><span class="chip">Requirement Gathering</span><span class="chip">Process Analysis</span><span class="chip">KPI Identification</span><span class="chip">Stakeholder Coordination</span><span class="chip">Demand Planning</span></div></div>
+    <div class="sc2"><div class="sct">Databases &amp; Querying</div><div class="sch"><span class="chip">SQL Joins</span><span class="chip">Subqueries</span><span class="chip">Aggregations</span><span class="chip">Data Extraction</span><span class="chip">VLOOKUP / Pivot Tables</span></div></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sl2">Built at Bluetik · From Scratch</div>
+  <h2 class="st2"><em>Projects</em></h2>
+  <div class="pw">
+    <div class="pc2 rv">
+      <div class="pbn">01</div>
+      <div class="pi">
+        <div class="pm">
+          <div class="pmt">Project 01 · React + AI · Prototype Tested Locally</div>
+          <div class="pt">AI Strategy Engine</div>
+          <div class="ps">Built for Bluetik Marketing Agency · 2026</div>
+          <p class="pd">A single-page React application that replaces hours of manual strategy work with a 2-minute AI pipeline. The analyst pastes a client's Instagram URL — the app uses <strong>Claude AI</strong> to find the top 3 real competitors, scrapes all four profiles via <strong>Apify</strong>, and then feeds everything into Claude to generate a complete, client-specific campaign strategy and content kit.</p>
+          <p class="pd">Supports PDF intake form uploads — Claude reads and auto-fills the entire client brief. Covers <strong>13 industries across India</strong>, operates in two modes (URL + Manual), and outputs Reels scripts, carousel copy, ad copy, captions, and WhatsApp follow-up messages — all tailored to the specific client, not generic templates.</p>
+          <div class="ptl"><span>Architecture:</span> Fully client-side React app · No backend server · Vite proxy rewrites /api/* → Anthropic · Apify called directly · PDF.js loaded dynamically from CDN</div>
+          <div class="ptl"><span>Scale:</span> ~₹4–11 per full client analysis · 150–200 analyses on $10 credit · Used by agency strategists, account managers &amp; sales team</div>
+          <div class="ptl"><span>Codebase:</span> ~1,560-line App.jsx · 4 Claude API calls per session · JSON repair logic · Fallback strategy if API fails</div>
+          <div class="pch">
+            <span>React + Vite</span><span>Anthropic Claude</span><span>Apify Scraper</span>
+            <span>PDF.js</span><span>JavaScript (JSX)</span><span>Prompt Engineering</span><span>Instagram Analytics</span>
+          </div>
+        </div>
+        <div class="pside">
+          <div class="pb">
+            <div class="pbl">5-Step AI Pipeline</div>
+            <div class="pbc">① Client brief → PDF parse<br/>② Claude finds competitors<br/>③ Apify scrapes all profiles<br/>④ Claude generates strategy<br/>⑤ Content kit generated</div>
+          </div>
+          <div class="pb">
+            <div class="pbl">Output Delivered</div>
+            <div class="pbc">Reels scripts · Carousel copy · Ad copy · Captions · WhatsApp messages · 7-day calendar · Competitor gap analysis</div>
+          </div>
+          <div class="pb">
+            <div class="pbl">Time Saved</div>
+            <span class="pbn2">&lt; 2 min</span>
+            <div class="pbs">vs. hours of manual work</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pc2 rv">
+      <div class="pbn">02</div>
+      <div class="pi">
+        <div class="pm">
+          <div class="pmt">Project 02 · Node.js + WhatsApp + AI · Prototype Tested Locally</div>
+          <div class="pt">AI Saloon Management System</div>
+          <div class="ps">Client: Kerala Saloon Chain — 15 Branches · 2026</div>
+          <p class="pd">A full WhatsApp-native AI booking and management platform for a <strong>15-branch Kerala saloon chain serving 250 customers/day</strong>. Customers message any branch's WhatsApp number in Malayalam or English — Claude AI handles the full conversation: booking appointments, answering pricing queries, sending 24-hour reminders, and collecting post-service feedback.</p>
+          <p class="pd">Built the complete production architecture from scratch: 5-layer system (WATI → Node.js → Claude AI → PostgreSQL → React dashboards), full 10-phase build roadmap, INR infrastructure pricing for client pitch, risk matrix, 6-month post-launch plan, and ROI case — break-even in under 10 months.</p>
+          <div class="ptl"><span>Architecture:</span> WATI (15 WhatsApp numbers) → Node.js + Express (Railway) → Claude Haiku/Sonnet → PostgreSQL (Supabase) → React dashboards (Vercel) — no Redis needed at this scale</div>
+          <div class="ptl"><span>AI Design:</span> Custom per-branch system prompts · Intent classifier returning structured JSON · Last-5-message context memory · 200+ Malayalam test messages · Escalation to manager on 2 consecutive unknown intents</div>
+          <div class="ptl"><span>Business case:</span> ₹6,00,000 one-time build · ₹27,000/month recurring · ₹3.60 cost per customer · Staff time saving = ₹56,250/month · ROI positive from Month 2</div>
+          <div class="pch">
+            <span>Node.js + Express</span><span>PostgreSQL</span><span>WATI WhatsApp API</span>
+            <span>Claude AI (Haiku + Sonnet)</span><span>React + Vercel</span><span>Supabase</span>
+            <span>Malayalam NLP</span><span>Railway</span>
+          </div>
+        </div>
+        <div class="pside">
+          <div class="pb">
+            <div class="pbl">System Scale</div>
+            <div class="pbc"><strong>15 branches</strong> · Kerala-wide<br/><strong>250 customers</strong>/day<br/><strong>~6,000</strong> WhatsApp msgs/mo<br/><strong>~5,000</strong> AI calls/month<br/><strong>8–10 weeks</strong> to go-live</div>
+          </div>
+          <div class="pb">
+            <div class="pbl">Monthly Cloud Cost</div>
+            <span class="pbn2">₹7,000</span>
+            <div class="pbs">Full production infrastructure</div>
+          </div>
+          <div class="pb">
+            <div class="pbl">One-time Build</div>
+            <span class="pbn2">₹6,00,000</span>
+            <div class="pbs">Break-even in &lt; 10 months</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="cw">
+    <div class="sl2" style="justify-content:center;">Get in Touch</div>
+    <h2 class="st2" style="margin-bottom:1.5rem;">Let's <em>Connect</em></h2>
+    <p class="ci2 rv">I'm open to opportunities in Data Analysis, Business Analysis, and AI-driven roles. Whether you have a project in mind or just want to say hello — my inbox is always open.</p>
+    <a href="mailto:amrithnambiar901@gmail.com" class="ce rv">amrithnambiar901@gmail.com</a>
+    <div class="cls rv">
+      <a href="tel:+919562073633" class="cl2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.66A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +91 9562073633
+      </a>
+      <a href="https://www.linkedin.com" target="_blank" class="cl2">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <span class="cl2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Kannur, Kerala, India
+      </span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Amrith Raj M V</span>
+  <span>Data Analyst · AI Builder · Bluetik</span>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function ac(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ac);})();
+
+// PARTICLES
+const canvas=document.getElementById('pc'),ctx=canvas.getContext('2d');
+let W,H;
+function rs(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+rs();window.addEventListener('resize',rs);
+function Pt(){
+  this.reset=function(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.22;this.vy=(Math.random()-.5)*.22;this.r=Math.random()*1.1+.15;this.life=Math.random();this.ml=.5+Math.random()*.5;this.g=Math.random()>.65;};
+  this.reset();
+  this.update=function(){this.x+=this.vx;this.y+=this.vy;this.life+=.003;if(this.life>this.ml||this.x<0||this.x>W||this.y<0||this.y>H)this.reset();};
+  this.draw=function(){const a=Math.sin((this.life/this.ml)*Math.PI)*.5;ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.g?`rgba(184,146,42,${a})`:`rgba(240,236,228,${a*.3})`;ctx.fill();};
+}
+const pts=[];for(let i=0;i<120;i++){pts.push(new Pt());}
+function dc(){for(let i=0;i<pts.length;i++){for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<95){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(184,146,42,${(1-d/95)*.06})`;ctx.lineWidth=.4;ctx.stroke();}}}}
+(function ap(){ctx.clearRect(0,0,W,H);dc();pts.forEach(p=>{p.update();p.draw();});requestAnimationFrame(ap);})();
+
+// NAV
+const nb=document.getElementById('nb'),navAs=document.querySelectorAll('.nv a'),secs=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  nb.classList.toggle('sc',scrollY>60);
+  let c='';secs.forEach(s=>{if(scrollY>=s.offsetTop-130)c=s.id;});
+  navAs.forEach(a=>a.classList.toggle('act',a.getAttribute('href')==='#'+c));
+});
+
+// REVEAL
+const rvs=document.querySelectorAll('.rv,.rl');
+const ro=new IntersectionObserver((es)=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('v'),i*85);ro.unobserve(e.target);}});},{threshold:.07});
+rvs.forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
